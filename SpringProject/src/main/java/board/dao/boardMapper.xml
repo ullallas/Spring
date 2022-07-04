@@ -37,7 +37,7 @@
 	</select>
 	
 	<!-- 글보기 -->
-	<select id="getBoard" parameterType="int" resultType="board">
+	<select id="getBoardView" parameterType="int" resultType="board">
 		select * from board where seq = #{seq}
 	</select>
 	
@@ -47,32 +47,41 @@
 	</update>
 	
 	<!-- 답글 -->
-	<update id="boardReply1" parameterType="board">
-		update board set step=step+1 where ref = #{ref} and step > #{step}
-	</update>
+<!-- 	<update id="boardReply1" parameterType="board"> -->
+<!-- 		update board set step=step+1 where ref = #{ref} and step > #{step} -->
+<!-- 	</update> -->
 	
-	<insert id="boardReply2" parameterType="java.util.Map" >
-		insert into board values(seq_board.nextval,
-								 #{id},
-								 #{name},
-						   		 #{email},
-						   		 #{subject},
-						   		 #{content},
-						   		 #{ref},
-						   		 #{lev},
-						   		 #{step},
-						   		 #{pseq},
-						   		 0, <!-- reply -->
-						   		 0, <!-- hit -->
-						   		 sysdate)
+	<insert id="boardReply" parameterType="java.util.Map" >
+		begin
+			<!-- step update -->
+			update board set step=step+1 where ref = #{ref} and step > #{step};
+			
+			<!-- insert -->
+			insert into board values(seq_board.nextval,
+									 #{id},
+									 #{name},
+							   		 #{email},
+							   		 #{subject},
+							   		 #{content},
+							   		 #{ref}, 	<!-- 원글ref -->
+							   		 #{lev}+1,  <!-- 원글lev+1 -->
+							   		 #{step}+1, <!-- 원글step+1 -->
+							   		 #{pseq},
+							   		 0, <!-- reply -->
+							   		 0, <!-- hit -->
+							   		 sysdate);
+			
+			<!-- reply update -->
+			update board set reply=reply+1 where seq=#{pseq};
+		end;
 	</insert>
 	
 <!-- 	<update id="boardReply3" parameterType="int">
 		update board set reply=reply+1 where seq=#{seq}
 		</update> -->
-	<update id="boardReply3" parameterType="java.util.Map">
-		update board set reply=reply+1 where seq=#{pseq}
-	</update>
+<!-- 	<update id="boardReply3" parameterType="java.util.Map"> -->
+<!-- 		update board set reply=reply+1 where seq=#{pseq} -->
+<!-- 	</update> -->
 	
 	<!-- 글삭제 -->
 	<delete id="boardDelete" parameterType="int">

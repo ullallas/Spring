@@ -61,7 +61,7 @@ body {
 <div id="header">
 	<h1>
 		<img src="${pageContext.request.contextPath }/img/malsook.jpg" width="60"
-		alt="malsook" onclick="location.href='${pageContext.request.contextPath }/index.jsp'" style="cursor: pointer;">MVC를 이용한 미니 프로젝트</h1>
+		alt="malsook" onclick="location.href='${pageContext.request.contextPath }/index'" style="cursor: pointer;">MVC를 이용한 미니 프로젝트</h1>
 	<br>
 	<jsp:include page="${menu }" />
 </div>

@@ -35,8 +35,10 @@
 
 <ul class="mainnav">
 	<c:if test="${memId != null }">
-		<li><a href="/miniProject/board/boardWriteForm.do" id="write">글쓰기</a></li>
+		<li><a href="/SpringProject/board/boardWriteForm">글쓰기</a></li>
+		<li><a href="/SpringProject/imageboard/imageboardWriteForm">상품등록</a></li>
 	</c:if>
-		<li><a href="/miniProject/board/boardList.do?pg=1" id="list">목록</a></li>
+		<li><a href="/SpringProject/board/boardList">목록</a></li>
+		<li><a href="/SpringProject/imageboard/imageboardList">상품목록</a></li>
 </ul>
 
